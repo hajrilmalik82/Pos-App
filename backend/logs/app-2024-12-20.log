@@ -1,0 +1,10 @@
+ [LOGGER] 2024-12-20 10:06:51.625 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 10:16:06.486 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 10:21:43.670 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 10:31:36.286 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 10:49:01.176 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 10:59:09.525 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 11:36:04.732 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 11:46:55.269 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 11:52:47.892 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-20 11:58:33.462 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired

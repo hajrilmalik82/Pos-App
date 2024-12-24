@@ -1,0 +1,117 @@
+ [LOGGER] 2024-12-21 12:09:33.647 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 12:15:28.092 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:53:53.048 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-21 09:04:59.709 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:18:55.593 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:19:08.041 AM error : controllers/cart.controller.js:createCart - 
+Invalid `prisma.carts.create()` invocation:
+
+{
+  data: {
+    productName: undefined,
+    qty: undefined,
+    totalPrice: undefined,
+    note: undefined,
+    productId: undefined,
+    userId: undefined,
++   price: Decimal
+  }
+}
+
+Argument `price` is missing.
+ [LOGGER] 2024-12-21 09:25:50.574 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:32:05.351 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:36:48.963 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:41:11.377 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:42:09.808 AM error : controllers/cart.controller.js:deleteCart - 
+Invalid `prisma.carts.delete()` invocation:
+
+{
+  where: {
+    id: 2,
++   userId: {
++     equals: Int | IntFieldRefInput,
++     in: Int[],
++     notIn: Int[],
++     lt: Int | IntFieldRefInput,
++     lte: Int | IntFieldRefInput,
++     gt: Int | IntFieldRefInput,
++     gte: Int | IntFieldRefInput,
++     not: Int | NestedIntFilter
++   }
+  }
+}
+
+Argument `userId` is missing.
+ [LOGGER] 2024-12-21 09:42:55.291 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:47:43.886 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 10:11:48.571 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 10:15:37.563 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 10:20:56.712 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 04:47:23.714 PM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-21 04:47:34.641 PM error : controllers/order.controller.js:getOrderById - 
+Invalid `prisma.orders.findUnique()` invocation:
+
+{
+  where: {
+    id: 1
+  },
+  include: {
+    orderdetail: true,
+    ~~~~~~~~~~~
+?   user?: true,
+?   Orderdetail?: true,
+?   Orderreturn?: true
+  }
+}
+
+Unknown field `orderdetail` for include statement on model `Orders`. Available options are marked with ?.
+ [LOGGER] 2024-12-21 04:48:07.280 PM error : controllers/order.controller.js:getOrderById - 
+Invalid `prisma.orders.findUnique()` invocation:
+
+{
+  where: {
+    id: 4
+  },
+  include: {
+    orderdetail: true,
+    ~~~~~~~~~~~
+?   user?: true,
+?   Orderdetail?: true,
+?   Orderreturn?: true
+  }
+}
+
+Unknown field `orderdetail` for include statement on model `Orders`. Available options are marked with ?.
+ [LOGGER] 2024-12-21 04:49:08.874 PM error : controllers/order.controller.js:getOrderById - 
+Invalid `prisma.orders.findUnique()` invocation:
+
+{
+  where: {
+    id: 4
+  },
+  include: {
+    orderdetail: true,
+    ~~~~~~~~~~~
+?   user?: true,
+?   Orderdetail?: true,
+?   Orderreturn?: true
+  }
+}
+
+Unknown field `orderdetail` for include statement on model `Orders`. Available options are marked with ?.
+ [LOGGER] 2024-12-21 04:49:45.241 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 04:56:59.140 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 05:04:53.423 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 05:52:18.284 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:07:11.472 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:24:35.439 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:31:33.721 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:37:35.739 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:50:35.178 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:52:28.054 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 08:55:02.450 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:07:20.965 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:12:42.451 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:18:39.936 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-21 09:21:26.534 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired

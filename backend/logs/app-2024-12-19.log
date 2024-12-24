@@ -1,0 +1,90 @@
+ [LOGGER] 2024-12-19 08:52:22.971 PM error : uncaughtException: listen EADDRINUSE: address already in use :::3000
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1907:16)
+    at listenInCluster (node:net:1964:12)
+    at Server.listen (node:net:2066:7)
+    at Function.listen (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\application.js:635:24)
+    at file:///C:/Users/Asep/Downloads/pos_app/backend/src/index.js:9:5
+    at ModuleJob.run (node:internal/modules/esm/module_job:268:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:543:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+ [LOGGER] 2024-12-19 09:36:05.053 PM error : controllers/user.controller.js:getUserById - 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
++   id: Int
+  }
+}
+
+Argument `id` is missing.
+ [LOGGER] 2024-12-19 09:38:29.665 PM error : controllers/user.controller.js:getUserById - 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
++   id: Int
+  }
+}
+
+Argument `id` is missing.
+ [LOGGER] 2024-12-19 09:39:06.456 PM error : controllers/user.controller.js:getUserById - 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
++   id: Int
+  }
+}
+
+Argument `id` is missing.
+ [LOGGER] 2024-12-19 09:40:22.257 PM error : controllers/user.controller.js:setRefreshToken - Unexpected token '�', "���z�S�G�" is not valid JSON
+ [LOGGER] 2024-12-19 09:41:00.510 PM error : controllers/user.controller.js:getUserById - 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
++   id: Int
+  }
+}
+
+Argument `id` is missing.
+ [LOGGER] 2024-12-19 09:53:10.154 PM error : controllers/user.controller.js:setRefreshToken - Unexpected token '�', "���z�S�G�" is not valid JSON
+ [LOGGER] 2024-12-19 10:28:06.477 PM error : uncaughtException: Cannot read properties of undefined (reading 'details')
+TypeError: Cannot read properties of undefined (reading 'details')
+    at createCategory (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/kategory.controller.js:53:22)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at autenticate (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/error.controller.js:24:5)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:346:12)
+ [LOGGER] 2024-12-19 10:28:23.065 PM error : uncaughtException: Cannot read properties of undefined (reading 'details')
+TypeError: Cannot read properties of undefined (reading 'details')
+    at createCategory (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/kategory.controller.js:53:22)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at autenticate (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/error.controller.js:24:5)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:346:12)
+ [LOGGER] 2024-12-19 10:29:54.711 PM error : uncaughtException: Cannot read properties of undefined (reading 'details')
+TypeError: Cannot read properties of undefined (reading 'details')
+    at createCategory (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/kategory.controller.js:53:22)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at autenticate (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/error.controller.js:24:5)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Asep\Downloads\pos_app\backend\node_modules\express\lib\router\index.js:346:12)
+ [LOGGER] 2024-12-19 10:56:25.080 PM error : utils/jwt.js:verifyAccessToken - jwt expired
+ [LOGGER] 2024-12-19 10:58:27.754 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired

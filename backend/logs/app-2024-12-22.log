@@ -1,0 +1,125 @@
+ [LOGGER] 2024-12-22 12:19:18.575 AM error : controllers/user.controller.js:loginUser - 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+Can't reach database server at `localhost:3306`
+
+Please make sure your database server is running at `localhost:3306`.
+ [LOGGER] 2024-12-22 08:53:09.339 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:53:09.377 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: invalid signature
+ [LOGGER] 2024-12-22 08:55:31.642 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:55:31.669 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: invalid signature
+ [LOGGER] 2024-12-22 08:57:44.907 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:57:45.057 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: invalid signature
+ [LOGGER] 2024-12-22 09:01:23.620 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:01:23.701 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: invalid signature
+ [LOGGER] 2024-12-22 09:07:29.332 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:07:29.443 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:07:38.368 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:09:21.172 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:10:27.200 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:36:54.146 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:36:54.265 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:37:03.097 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:37:08.502 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:37:49.286 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:39:00.159 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:40:08.330 AM error : controllers/user.controller.js:verifyAccessToken - JsonWebTokenError: jwt malformed
+ [LOGGER] 2024-12-22 09:43:47.472 AM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 01:37:16.995 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 02:13:04.542 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 02:13:04.547 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 02:24:05.425 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 02:24:05.431 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 02:29:18.962 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:08:25.218 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:08:25.226 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:10:25.152 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:10:25.158 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:58:57.370 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 06:58:57.378 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:26:30.233 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:26:30.236 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:44:38.979 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:44:38.994 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:55:27.681 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 07:55:27.685 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:06:42.587 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:06:42.590 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:09:43.812 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:29:43.498 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:29:43.503 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:29:43.561 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:33:07.075 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:33:07.078 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:33:07.086 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:36:23.749 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:36:23.753 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:36:23.784 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:54:54.855 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:54:54.860 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 08:54:54.864 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:11:56.065 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:11:56.069 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:11:56.100 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.124 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.134 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.141 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.143 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.145 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:13:52.148 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:16:12.104 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:16:12.108 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:16:24.265 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:16:25.742 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:16:26.098 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:16:26.432 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:17:59.845 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:17:59.859 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:17:59.866 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:18:13.378 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:19:46.532 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:19:46.547 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:19:46.552 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:19:46.555 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:19:46.557 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:19:46.562 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:20:05.970 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\ee7595c24163e0fbff7c6b5e4b9f49ed.png'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:21:45.367 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:21:45.374 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:21:45.381 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.184 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.199 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.204 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.210 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.215 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:23:31.218 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:33:10.809 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:35:04.602 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:35:04.605 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:35:04.640 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:35:24.249 PM error : uncaughtException: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\c07e921c78fce0db6f618cabd9109074.jpg'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\Asep\Downloads\pos_app\backend\public\images\c07e921c78fce0db6f618cabd9109074.jpg'
+    at Object.unlinkSync (node:fs:1871:11)
+    at updateProduct (file:///C:/Users/Asep/Downloads/pos_app/backend/src/controllers/product.controller.js:278:8)
+ [LOGGER] 2024-12-22 09:36:54.663 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:36:54.672 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired
+ [LOGGER] 2024-12-22 09:36:54.691 PM error : controllers/user.controller.js:verifyAccessToken - TokenExpiredError: jwt expired

@@ -1,0 +1,16 @@
+ [LOGGER] 2024-12-24 01:25:19.834 PM error : controllers/purchase.controller.js:getAllPurchase - 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Raw query failed. Code: `1064`. Message: `You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?
+          ORDER BY 
+              p.id DESC 
+          LIMIT ?' at line 11`
+ [LOGGER] 2024-12-24 01:25:19.839 PM error : controllers/purchase.controller.js:getAllPurchase - 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Raw query failed. Code: `1064`. Message: `You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?
+          ORDER BY 
+              p.id DESC 
+          LIMIT ?' at line 11`

@@ -5,6 +5,7 @@ import { purchaseValidation } from "../validations/purchase.validation.js";
 import fs from "fs";
 import pdf from "pdf-creator-node";
 import excelJS from "exceljs";
+
 export const createPurchase = async (req, res) => {
   try {
     // validasi data
@@ -15,67 +16,47 @@ export const createPurchase = async (req, res) => {
         result: null,
       });
     }
-    // create prisma transaction
-    await prisma.$transaction(async (prisma) => {
-      // insert purchase
-      const purchase = await prisma.purchase.create({
+
+    // Menggunakan nested writes untuk menangani transaksi secara otomatis
+    const newPurchase = await prisma.purchase.create({
+      data: {
+        code: setOrderCode("PUR-"),
+        date: value.date,
+        note: value.note,
+        total: Number(value.total),
+        ppn: Number(value.ppn),
+        grandTotal: Number(value.grandTotal),
+        supplierName: value.supplierName, // <-- Menambahkan nama supplier
+        userId: Number(req.user.id), // Mengambil userId dari user yang login
+        Purchasedetail: {
+          create: value.detail.map((item) => ({
+            productId: Number(item.product.productId),
+            productName: item.product.productName,
+            price: Number(item.price), // Harga beli bisa custom per item
+            qty: Number(item.qty),
+            total: Number(item.totalPrice),
+          })),
+        },
+      },
+    });
+
+    // Update stok produk setelah purchase berhasil dibuat
+    for (const item of value.detail) {
+      await prisma.product.update({
+        where: {
+          id: Number(item.product.productId),
+        },
         data: {
-          code: setOrderCode("PUR-"),
-          date: value.date,
-          note: value.note,
-          total: Number(value.total),
-          ppn: Number(value.ppn),
-          grandTotal: Number(value.grandTotal),
-          userId: Number(value.userId),
+          qty: {
+            increment: Number(item.qty),
+          },
         },
       });
-      // validasi purchase detail
-      if (value.detail.length <= 0) {
-        return res.status(400).json({
-          message: "purchase detail cannot be empty",
-          result: null,
-        });
-      }
-      // insert purchase detail
-      for (let i = 0; i < value.detail.length; i++) {
-        // check product exists
-        if (
-          value.detail[i].product.productId == "" ||
-          value.detail[i].product.productId == null
-        ) {
-          throw new Error("product cannot be empty");
-        }
-        // check qty
-        if (value.detail[i].qty == "" || value.detail[i].qty == null) {
-          throw new Error("qty cannot be empty");
-        }
-        // insert purchase detail
-        await prisma.purchasedetail.create({
-          data: {
-            productId: Number(value.detail[i].product.productId),
-            productName: value.detail[i].product.productName,
-            price: Number(value.detail[i].price),
-            qty: Number(value.detail[i].qty),
-            total: Number(value.detail[i].totalPrice),
-            purchaseId: Number(purchase.id),
-          },
-        });
-        // update stock
-        await prisma.product.update({
-          where: {
-            id: Number(value.detail[i].product.productId),
-          },
-          data: {
-            qty: {
-              increment: Number(value.detail[i].qty),
-            },
-          },
-        });
-      }
-    });
+    }
+
     return res.status(200).json({
-      message: "success",
-      result: value,
+      message: "Purchase created successfully",
+      result: newPurchase,
     });
   } catch (error) {
     logger.error(
@@ -97,7 +78,7 @@ export const getAllPurchase = async (req, res) => {
     if (last_id < 1) {
       result = await prisma.$queryRaw`
         SELECT 
-              p.id, p.code, p.date, p.note, p.userId, u.name 
+            p.id, p.code, p.date, p.note, p.supplierName, p.userId, u.name 
           FROM  Purchase p 
           INNER JOIN  User u 
           ON p.userId = u.id
@@ -105,6 +86,7 @@ export const getAllPurchase = async (req, res) => {
               p.code LIKE CONCAT('%', ${search}, '%')
               OR p.date LIKE CONCAT('%', ${search}, '%')
               OR p.note LIKE CONCAT('%', ${search}, '%')
+              OR p.supplierName LIKE CONCAT('%', ${search}, '%') -- <-- Tambah pencarian supplierName
               OR u.name LIKE CONCAT('%', ${search}, '%')
           ORDER BY 
               p.id DESC 
@@ -112,17 +94,18 @@ export const getAllPurchase = async (req, res) => {
       `;
     } else {
       result = await prisma.$queryRaw`
-         SELECT 
-            p.id, p.code, p.date, p.note, p.userId, u.name 
+          SELECT 
+            p.id, p.code, p.date, p.note, p.supplierName, p.userId, u.name 
         FROM  Purchase p 
         INNER JOIN User u 
         ON p.userId = u.id
         WHERE 
             (
-              p.code LIKE CONCAT('%', ${search}, '%')
-              OR p.date LIKE CONCAT('%', ${search}, '%')
-              OR p.note LIKE CONCAT('%', ${search}, '%')
-              OR u.name LIKE CONCAT('%', ${search}, '%')
+                p.code LIKE CONCAT('%', ${search}, '%')
+                OR p.date LIKE CONCAT('%', ${search}, '%')
+                OR p.note LIKE CONCAT('%', ${search}, '%')
+                OR p.supplierName LIKE CONCAT('%', ${search}, '%') -- <-- Tambah pencarian supplierName
+                OR u.name LIKE CONCAT('%', ${search}, '%')
             )
             AND p.id < ${last_id}
         ORDER BY 
@@ -190,7 +173,6 @@ export const generatePdf = async (req, res) => {
     border: "10mm",
     header: {
       height: "0.1mm",
-      // contents: '<div style="text-align: center;">Author: Pojok Code</div>',
       contents: "",
     },
     footer: {
@@ -235,6 +217,7 @@ export const generatePdf = async (req, res) => {
         no: no + 1,
         code: order.code,
         date: new Date(order.date).toLocaleDateString("id-ID"),
+        supplierName: order.supplierName, // <-- Tambah supplierName untuk laporan
         total: Number(order.total).toLocaleString("id-ID"),
         ppn: Number(order.ppn).toLocaleString("id-ID"),
         grandTotal: Number(order.grandTotal).toLocaleString("id-ID"),
@@ -285,7 +268,7 @@ export const generateExcel = async (req, res) => {
       });
     }
     const data = await prisma.$queryRaw`
-    SELECT  o.code, o.date,o.note, o.total,o.ppn,o.grandTotal,d.productName,d.price,
+    SELECT  o.code, o.date, o.note, o.supplierName, o.total, o.ppn, o.grandTotal, d.productName, d.price,
     d.qty, (d.price*d.qty) as totalPrice from Purchase o 
     INNER JOIN Purchasedetail d ON(d.purchaseId=o.id)
     WHERE o.date BETWEEN ${startDate} AND ${endDate}`;
@@ -293,6 +276,7 @@ export const generateExcel = async (req, res) => {
       { header: "No", key: "s_no", width: 5 },
       { header: "Date", key: "date", width: 15 },
       { header: "Code", key: "code", width: 20 },
+      { header: "Supplier", key: "supplierName", width: 25 }, // <-- Tambah kolom supplier
       { header: "Total", key: "total", width: 25 },
       { header: "PPN", key: "ppn", width: 20 },
       { header: "Grand Total", key: "grandTotal", width: 20 },
@@ -313,7 +297,7 @@ export const generateExcel = async (req, res) => {
       worksheet.addRow(purchase);
       counter++;
     });
-    let list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]; // <-- Tambah "K"
     for (let i = 0; i <= counter; i++) {
       list.forEach((item) => {
         worksheet.getCell(item + i).border = {

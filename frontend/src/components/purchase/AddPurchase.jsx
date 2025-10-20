@@ -27,6 +27,7 @@ const AddPurchase = () => {
     new Date().setHours(7, 0, 0, 0) //untuk timezone asia jakarta
   );
   const [note, setNote] = useState("");
+  const [supplierName, setSupplierName] = useState(""); // <-- 1. STATE BARU UNTUK SUPPLIER
   const [data, setData] = useState([
     {
       product: null,
@@ -35,6 +36,8 @@ const AddPurchase = () => {
       totalPrice: 0,
     },
   ]);
+
+  // useEffect untuk reset form, bisa dikosongkan jika tidak perlu
   useEffect(() => {
     setData([
       {
@@ -61,21 +64,21 @@ const AddPurchase = () => {
   const handleChange = (e, i) => {
     const { name, value } = e;
     const onchangeVal = [...data];
-    if (name == "product") {
+
+    if (name === "product") {
       const product = JSON.parse(value);
       onchangeVal[i].product = {
         productId: product.id,
         productName: product.productName,
-        price: product.price,
-        qty: product.qty,
       };
-      onchangeVal[i].price = product.price;
+      onchangeVal[i].price = product.price; // Harga default dari produk
       onchangeVal[i].totalPrice = Number(onchangeVal[i].qty) * product.price;
     } else {
       onchangeVal[i][name] = value;
-    }
-    if (name == "qty") {
-      onchangeVal[i].totalPrice = onchangeVal[i].qty * onchangeVal[i].price;
+      // Recalculate total price if qty or price changes
+      if (name === "qty" || name === "price") {
+        onchangeVal[i].totalPrice = onchangeVal[i].qty * onchangeVal[i].price;
+      }
     }
     setData(onchangeVal);
   };
@@ -98,59 +101,57 @@ const AddPurchase = () => {
     const isDuplicate = data.some((obj, index) => {
       return (
         data.findIndex(
-          (item) => item.product.productId === obj.product.productId
+          (item) => item.product?.productId === obj.product?.productId
         ) !== index
       );
     });
+
     if (isDuplicate) {
       toast.error("Duplicate Product", {
         position: "top-center",
       });
-    } else {
-      let sum = 0;
-      if (data) {
-        sum = data.reduce(function (result, item) {
-          return result + parseInt(item.totalPrice);
-        }, 0);
-      }
-      // simpan data ke database
+      return;
+    }
 
-      let bodyContent = {
-        date: new Date(
-          new Date(purchaseDate).getTime() -
-            new Date().getTimezoneOffset() * 60 * 1000
-        )
-          .toJSON()
-          .slice(0, 19)
-          .replace("T", " "),
-        note: note,
-        userId: secureLocalStorage.getItem("user").id,
-        total: sum,
-        ppn: Number(sum) * 0.11,
-        grandTotal: Number(sum) * 0.11 + Number(sum),
-        detail: data,
-      };
-      let reqOptions = {
-        url: "/api/purchases",
-        method: "POST",
-        data: bodyContent,
-      };
-      try {
-        const response = await axiosInstance.request(reqOptions);
-        if (response.data) {
-          toast.success(response.data.message, {
-            position: "top-center",
-          });
-          navigate("/purchase");
-        }
-      } catch (error) {
-        const errMessage = JSON.parse(error.request.response);
-        toast.error(errMessage.message, {
-          position: "top-center",
-        });
-      }
+    let sum = 0;
+    if (data) {
+      sum = data.reduce(function (result, item) {
+        return result + parseFloat(item.totalPrice);
+      }, 0);
+    }
+
+    // simpan data ke database
+    let bodyContent = {
+      date: new Date(
+        new Date(purchaseDate).getTime() -
+          new Date().getTimezoneOffset() * 60 * 1000
+      )
+        .toJSON()
+        .slice(0, 19)
+        .replace("T", " "),
+      note: note,
+      supplierName: supplierName, // <-- 2. TAMBAHKAN SUPPLIER NAME
+      userId: secureLocalStorage.getItem("user").id,
+      total: sum,
+      ppn: Number(sum) * 0.11,
+      grandTotal: Number(sum) * 0.11 + Number(sum),
+      detail: data,
+    };
+
+    try {
+      await axiosInstance.post("/api/purchases", bodyContent);
+      toast.success("Purchase created successfully", {
+        position: "top-center",
+      });
+      navigate("/purchase");
+    } catch (error) {
+      const errMessage = JSON.parse(error.request.response);
+      toast.error(errMessage.message, {
+        position: "top-center",
+      });
     }
   };
+
   return (
     <>
       <NavbarComponent />
@@ -168,6 +169,22 @@ const AddPurchase = () => {
         <Row>
           <Col>
             <form onSubmit={handleSubmit}>
+              {/* Form Group untuk Supplier Name */}
+              <Form.Group as={Row} className="mb-3 mt-3">
+                <Form.Label column sm="2">
+                  Supplier Name
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="text"
+                    value={supplierName}
+                    onChange={(e) => setSupplierName(e.target.value)}
+                    placeholder="Enter supplier name"
+                    required
+                  />
+                </Col>
+              </Form.Group>
+
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Purchase Date
@@ -207,7 +224,7 @@ const AddPurchase = () => {
                       <tr>
                         <th>Product</th>
                         <th>Quantity</th>
-                        <th>Unit price</th>
+                        <th>Unit Price</th>
                         <th>Subtotal</th>
                         <th></th>
                       </tr>
@@ -222,15 +239,7 @@ const AddPurchase = () => {
                                 value={
                                   item.product ? item.product.productName : ""
                                 }
-                                onChange={(e) =>
-                                  handleChange(
-                                    {
-                                      name: e.target.name,
-                                      value: e.target.value,
-                                    },
-                                    index
-                                  )
-                                }
+                                readOnly
                               />
                               <Button
                                 type="button"
@@ -259,7 +268,23 @@ const AddPurchase = () => {
                               }
                             />
                           </td>
-                          <td>{Number(item.price).toLocaleString("id-ID")}</td>
+                          <td>
+                            {/* 3. UBAH HARGA MENJADI INPUT */}
+                            <Form.Control
+                              type="number"
+                              name="price"
+                              value={item.price}
+                              onChange={(e) =>
+                                handleChange(
+                                  {
+                                    name: e.target.name,
+                                    value: e.target.value,
+                                  },
+                                  index
+                                )
+                              }
+                            />
+                          </td>
                           <td>
                             {Number(item.totalPrice).toLocaleString("id-ID")}
                           </td>
@@ -292,7 +317,7 @@ const AddPurchase = () => {
       <ProductModal
         show={modalShow}
         size="xl"
-        modalTitle="Search Supplier"
+        modalTitle="Search Product" // Ganti judul modal
         currIndex={currIndex}
         handleChange={handleChange}
         onHide={() => setModalShow(false)}

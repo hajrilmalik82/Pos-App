@@ -61,7 +61,7 @@ export const createProduct = async (req, res) => {
           qty: value.qty,
           price: value.price,
           kategoryId: value.kategoryId,
-          supplierId: value.supplierId,
+          // supplierId: value.supplierId, <-- DIHAPUS
         },
       });
       return res.status(200).json({
@@ -88,62 +88,64 @@ export const getAllProduct = async (req, res) => {
   try {
     if (last_id < 1) {
       result = await prisma.$queryRaw`
-         SELECT 
-              id, 
-              code, 
-              barcode, 
-              productName, 
-              image, 
-              url,
-              qty, 
-              price, 
-              kategoryId, 
-              supplierId, 
-              createdAt, 
-              updatedAt 
-          FROM 
-              Product 
-          WHERE 
-              (
-                  code LIKE ${`%${search}%`}
-                  OR productName LIKE ${`%${search}%`}
-                  OR barcode LIKE ${`%${search}%`}
-                  OR qty LIKE ${`%${search}%`}
-                  OR price LIKE ${`%${search}%`}
-              )
-          ORDER BY 
-              id DESC 
-          LIMIT ${limit};
+          SELECT 
+                id, 
+                code, 
+                barcode, 
+                productName, 
+                image, 
+                url,
+                qty, 
+                price, 
+                kategoryId, 
+                -- supplierId, <-- DIHAPUS
+                createdAt, 
+                updatedAt 
+            FROM 
+                Product 
+            WHERE 
+                (
+                    code LIKE ${`%${search}%`}
+                    OR productName LIKE ${`%${search}%`}
+                    OR barcode LIKE ${`%${search}%`}
+                    OR qty LIKE ${`%${search}%`}
+                    OR price LIKE ${`%${search}%`}
+                )
+                AND isDeleted = false
+            ORDER BY 
+                id DESC 
+            LIMIT ${limit};
       `;
     } else {
       result = await prisma.$queryRaw`
-         SELECT 
-              id, 
-              code, 
-              barcode, 
-              productName, 
-              image, 
-              url,
-              qty, 
-              price, 
-              kategoryId, 
-              supplierId, 
-              createdAt, 
-              updatedAt 
-          FROM 
-              Product 
-          WHERE 
-              (
-                  code LIKE ${`%${search}%`}
-                  OR productName LIKE ${`%${search}%`}
-                  OR barcode LIKE ${`%${search}%`}
-                  OR CAST(qty AS CHAR) LIKE ${`%${search}%`}
-                  OR CAST(price AS CHAR) LIKE ${`%${search}%`}
-              )
-              AND id < ${last_id}
-          ORDER BY 
-              id DESC 
-          LIMIT ${limit};
+          SELECT 
+                id, 
+                code, 
+                barcode, 
+                productName, 
+                image, 
+                url,
+                qty, 
+                price, 
+                kategoryId, 
+                -- supplierId, <-- DIHAPUS
+                createdAt, 
+                updatedAt 
+            FROM 
+                Product 
+            WHERE 
+                (
+                    code LIKE ${`%${search}%`}
+                    OR productName LIKE ${`%${search}%`}
+                    OR barcode LIKE ${`%${search}%`}
+                    OR CAST(qty AS CHAR) LIKE ${`%${search}%`}
+                    OR CAST(price AS CHAR) LIKE ${`%${search}%`}
+                )
+                AND id < ${last_id}
+                AND isDeleted = false
+            ORDER BY 
+                id DESC 
+            LIMIT ${limit};
       `;
     }
     return res.status(200).json({
@@ -170,7 +172,7 @@ export const getProductById = async (req, res) => {
     const result = await prisma.product.findUnique({
       include: {
         kategory: true,
-        supplier: true,
+        // supplier: true, <-- DIHAPUS
       },
       where: {
         id: Number(req.params.id),
@@ -291,7 +293,7 @@ export const updateProduct = async (req, res) => {
         qty: value.qty,
         price: value.price,
         kategoryId: value.kategoryId,
-        supplierId: value.supplierId,
+        // supplierId: value.supplierId, <-- DIHAPUS
       },
     });
     return res.status(200).json({
@@ -310,31 +312,28 @@ export const updateProduct = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
-  // cek id ada atau tidak
-  const { id } = req.params;
-  const product = await prisma.product.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
-  if (!product) {
-    return res.status(404).json({
-      message: "Product not found",
-      result: null,
-    });
-  }
   try {
-    const result = await prisma.product.delete({
+    const product = await prisma.product.findUnique({
       where: {
         id: Number(req.params.id),
       },
     });
-    if (result) {
-      const filePath = `./public/images/${product.image}`;
-      fs.unlinkSync(filePath);
+
+    if (!product || product.isDeleted) {
+      return res.status(404).json({ message: "Product not found" });
     }
+
+    const result = await prisma.product.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
+
     return res.status(200).json({
-      message: "success",
+      message: "Product successfully archived",
       result,
     });
   } catch (error) {
@@ -373,7 +372,11 @@ export const generatePdf = async (req, res) => {
     if (fs.existsSync(fullPath)) {
       fs.unlinkSync(fullPath);
     }
-    const data = await prisma.product.findMany({});
+    const data = await prisma.product.findMany({
+      where: {
+        isDeleted: false,
+      },
+    });
     let barangs = [];
     data.forEach((barang, no) => {
       barangs.push({
@@ -418,7 +421,11 @@ export const generateExcel = async (req, res) => {
     if (fs.existsSync(`${path}/Product.xlsx`)) {
       fs.unlinkSync(`${path}/Product.xlsx`);
     }
-    const data = await prisma.product.findMany({});
+    const data = await prisma.product.findMany({
+      where: {
+        isDeleted: false,
+      },
+    });
     worksheet.columns = [
       { header: "No", key: "s_no", width: 5 },
       { header: "Nama Product", key: "productName", width: 20 },

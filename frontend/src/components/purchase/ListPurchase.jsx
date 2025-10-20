@@ -122,6 +122,7 @@ const ListPurchase = () => {
                         <th>#</th>
                         <th>Code</th>
                         <th>Date</th>
+                        <th>Supplier</th> {/* <-- TAMBAH HEADER SUPPLIER */}
                         <th>Note</th>
                         <th>User</th>
                         <th></th>
@@ -135,6 +136,7 @@ const ListPurchase = () => {
                           <td>
                             {new Date(item.date).toLocaleDateString("id-ID")}
                           </td>
+                          <td>{item.supplierName}</td> {/* <-- TAMPILKAN NAMA SUPPLIER */}
                           <td>{item.note}</td>
                           <td>{item.name}</td>
                           <td>

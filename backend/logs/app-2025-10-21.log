@@ -1,0 +1,5 @@
+ [LOGGER] 2025-10-21 01:08:34.137 AM error : controllers/user.controller.js:loginUser - 
+Invalid `prisma.user.findUnique()` invocation:
+
+
+Database `posapp` does not exist on the database server at `localhost:3306`.

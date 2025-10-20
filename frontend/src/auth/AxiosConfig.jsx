@@ -1,6 +1,6 @@
 import secureLocalStorage from "react-secure-storage";
 import axios from "axios";
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.timeout = import.meta.env.VITE_API_TIMEOUT;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 

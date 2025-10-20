@@ -24,7 +24,6 @@ const AddProduct = () => {
   const [qty, setQty] = useState("");
   const [price, setPrice] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const [supplier, setSupplier] = useState({});
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
@@ -60,7 +59,6 @@ const AddProduct = () => {
     formData.append("qty", qty);
     formData.append("price", price);
     formData.append("kategoryId", category.value);
-    formData.append("supplierId", supplier.id);
     try {
       const out = await axiosInstance.post("/api/products", formData, {
         headers: {
@@ -182,32 +180,6 @@ const AddProduct = () => {
                   />
                 </Col>
               </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Supplier
-                </Form.Label>
-                <Col sm="6">
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      type="text"
-                      placeholder=""
-                      value={
-                        supplier.firstName && supplier.lastName
-                          ? supplier.firstName + " " + supplier.lastName
-                          : ""
-                      }
-                      readOnly
-                    />
-                    <Button
-                      variant="primary"
-                      id="button-addon2"
-                      onClick={() => setModalShow(true)}
-                    >
-                      Search
-                    </Button>
-                  </InputGroup>
-                </Col>
-              </Form.Group>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Image
@@ -241,13 +213,6 @@ const AddProduct = () => {
           </Col>
         </Row>
       </Container>
-      <DataModal
-        show={modalShow}
-        size="xl"
-        modalTitle="Search Supplier"
-        onHide={() => setModalShow(false)}
-        setSupplier={setSupplier}
-      />
     </>
   );
 };

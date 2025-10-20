@@ -41,7 +41,7 @@ const OrderSend = () => {
             md={{ span: 4, offset: 4 }}
             className="border p-3"
           >
-            <h3 className="text-center fw-bold">PT ABCD</h3>
+            <h3 className="text-center fw-bold">PT Punya Hajril Malik Ganteng</h3>
             <h5 className="text-center">Order Detail</h5>
             <h6 className="text-center">{data.code}</h6>
             <h6 className="text-center">

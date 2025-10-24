@@ -24,8 +24,6 @@ model Product {
   code              String              @unique
   barcode           String?
   productName       String
-  image             String
-  url               String
   qty               Int
   price             Decimal
   kategoryId        Int

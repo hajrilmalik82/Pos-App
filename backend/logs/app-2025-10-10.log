@@ -1,5 +1,0 @@
- [LOGGER] 2025-10-10 02:11:52.213 AM error : controllers/kategory.controller.js:deleteCategory - 
-Invalid `prisma.category.delete()` invocation:
-
-
-Foreign key constraint violated: `kategoryId`

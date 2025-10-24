@@ -126,13 +126,6 @@ const SalesReport = () => {
                   >
                     <FaFilePdf /> Download PDF
                   </Button>
-                  <Button
-                    type="button"
-                    onClick={downloadExcel}
-                    variant="primary"
-                  >
-                    <FaFileExcel /> Download Excel
-                  </Button>
                 </Col>
               </Form.Group>
             </form>

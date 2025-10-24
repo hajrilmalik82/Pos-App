@@ -51,7 +51,6 @@ const ListProduct = () => {
   useEffect(() => {
     setChange(2);
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastId, keyword, change]);
 
   const fetchMore = () => {

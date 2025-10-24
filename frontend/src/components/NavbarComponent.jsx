@@ -37,7 +37,6 @@ const NavbarComponent = () => {
               id="basic-nav-dropdown"
             >
               <NavDropdown.Item href="/category">Category</NavDropdown.Item>
-              <NavDropdown.Item href="/supplier">Supplier</NavDropdown.Item>
               <NavDropdown.Item href="/product">Product</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown
@@ -62,9 +61,6 @@ const NavbarComponent = () => {
               }
               id="basic-nav-dropdown"
             >
-              <NavDropdown.Item href="/supplier-report">
-                Supplier
-              </NavDropdown.Item>
               <NavDropdown.Item href="/product-report">
                 Product
               </NavDropdown.Item>

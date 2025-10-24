@@ -5,7 +5,7 @@ import { axiosInstance } from "../../auth/AxiosConfig.jsx";
 import {
   Button,
   Col,
-  Figure,
+  // Figure, // Dihapus
   Form,
   InputGroup,
   Modal,
@@ -32,7 +32,17 @@ const ProductModal = (props) => {
     try {
       const response = await axiosInstance.request(reqOptions);
       const newData = response.data.result;
-      setData([...data, ...newData]);
+
+      // === PERBAIKAN LOGIC INTI ADA DI SINI ===
+      // Jika lastId = 0 (beban awal / pencarian baru), GANTI data.
+      // Jika tidak (infinite scroll), TAMBAHKAN data.
+      if (lastId === 0) {
+        setData(newData);
+      } else {
+        setData((prevData) => [...prevData, ...newData]);
+      }
+      // === AKHIR PERBAIKAN ===
+
       setTempId(response.data.lastId);
       setHasMore(response.data.hasMore);
     } catch (error) {
@@ -44,14 +54,17 @@ const ProductModal = (props) => {
   };
 
   useEffect(() => {
-    loadData();
+    // Hanya panggil loadData jika modal terlihat (show = true)
+    if (show) {
+      loadData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastId, keyword]);
+  }, [lastId, keyword, show]); // Tambahkan 'show' sebagai dependency
 
   const serchData = (e) => {
     e.preventDefault();
     setLastId(0);
-    setData([]);
+    // setData([]); // <-- HAPUS BARIS INI, ini yang menyebabkan bug
     setKeyword(query);
   };
 
@@ -59,13 +72,25 @@ const ProductModal = (props) => {
     setLastId(tempId);
   };
 
+  // Fungsi untuk mereset state saat modal ditutup
+  const handleOnHide = () => {
+    onHide();
+    // Reset state ke awal saat modal ditutup
+    setKeyword("");
+    setLastId(0);
+    setData([]);
+    setTempId(0);
+    setHasMore(true);
+    setQuery("");
+  };
+
   return (
     <>
       <Modal
-        onClose={onHide}
+        // onClose={onHide} // Hapus prop yang tidak standar
         size={size}
         show={show}
-        onHide={onHide}
+        onHide={handleOnHide} // Gunakan handleOnHide
         aria-labelledby="contained-modal-title-vcenter"
         centered
         backdrop="static"
@@ -108,37 +133,27 @@ const ProductModal = (props) => {
                       <th>Product Name</th>
                       <th>QTY</th>
                       <th>Price</th>
-                      <th>Image</th>
+                      {/* <th>Image</th> Dihapus */}
                     </tr>
                   </thead>
                   <tbody>
                     {data.map((item, index) => (
                       <tr
                         style={{ cursor: "pointer" }}
-                        key={index}
+                        key={item.id} // Gunakan item.id, bukan index
                         onClick={() => {
                           handleChange(
                             { name: "product", value: JSON.stringify(item) },
                             currIndex
                           ),
-                            onHide();
+                            handleOnHide(); // Gunakan handleOnHide
                         }}
                       >
                         <td>{index + 1}</td>
                         <td>{item.productName}</td>
                         <td>{Number(item.qty).toLocaleString("id-ID")}</td>
                         <td>Rp {Number(item.price).toLocaleString("id-ID")}</td>
-                        <td>
-                          <Figure className="m-0 p-0">
-                            <Figure.Image
-                              className="m-0 p-0"
-                              width={50}
-                              height={35}
-                              alt="preview image"
-                              src={item.url}
-                            />
-                          </Figure>
-                        </td>
+                        {/* Kolom <td> untuk gambar dihapus */}
                       </tr>
                     ))}
                   </tbody>
@@ -151,6 +166,7 @@ const ProductModal = (props) => {
     </>
   );
 };
+
 ProductModal.propTypes = {
   show: PropTypes.bool,
   onHide: PropTypes.func,
@@ -158,4 +174,5 @@ ProductModal.propTypes = {
   currIndex: PropTypes.number,
   handleChange: PropTypes.func,
 };
+
 export default ProductModal;

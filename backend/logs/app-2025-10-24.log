@@ -1,0 +1,36 @@
+ [LOGGER] 2025-10-24 06:33:07.743 PM error : uncaughtException: fs is not defined
+ReferenceError: fs is not defined
+    at generatePdf (file:///D:/belajar/pos-expressjs-reactjs/backend/src/controllers/product.controller.js:272:14)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:149:13)
+    at autenticate (file:///D:/belajar/pos-expressjs-reactjs/backend/src/controllers/error.controller.js:25:5)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:175:3)
+    at router (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:328:13)
+    at D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:286:9
+ [LOGGER] 2025-10-24 06:41:02.573 PM error : uncaughtException: fs is not defined
+ReferenceError: fs is not defined
+    at generatePdf (file:///D:/belajar/pos-expressjs-reactjs/backend/src/controllers/product.controller.js:272:14)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:149:13)
+    at autenticate (file:///D:/belajar/pos-expressjs-reactjs/backend/src/controllers/error.controller.js:25:5)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:175:3)
+    at router (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:328:13)
+    at D:\belajar\pos-expressjs-reactjs\backend\node_modules\express\lib\router\index.js:286:9

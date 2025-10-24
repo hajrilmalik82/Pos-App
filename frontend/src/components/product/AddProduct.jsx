@@ -24,8 +24,6 @@ const AddProduct = () => {
   const [qty, setQty] = useState("");
   const [price, setPrice] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
 
   const loadKategory = useCallback(async () => {
@@ -44,18 +42,11 @@ const AddProduct = () => {
     loadKategory();
   }, [loadKategory]);
 
-  const loadImage = (e) => {
-    const image = e.target.files[0];
-    setFile(image);
-    setPreview(URL.createObjectURL(image));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("barcode", barcode);
     formData.append("productName", nama);
-    formData.append("file", file);
     formData.append("qty", qty);
     formData.append("price", price);
     formData.append("kategoryId", category.value);
@@ -180,28 +171,6 @@ const AddProduct = () => {
                   />
                 </Col>
               </Form.Group>
-              <Form.Group as={Row} className="mb-3">
-                <Form.Label column sm="2">
-                  Image
-                </Form.Label>
-                <Col sm="6">
-                  <Form.Control type="file" onChange={loadImage} />
-                </Col>
-              </Form.Group>
-              <Row>
-                <Col md={{ span: 10, offset: 2 }}>
-                  {preview ? (
-                    <Figure>
-                      <Figure.Image
-                        width={171}
-                        height={180}
-                        alt="preview image"
-                        src={preview}
-                      />
-                    </Figure>
-                  ) : null}
-                </Col>
-              </Row>
               <Row>
                 <Col md={{ span: 10, offset: 2 }}>
                   <Button type="submit" variant="primary">

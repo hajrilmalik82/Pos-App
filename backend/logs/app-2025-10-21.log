@@ -3,3 +3,22 @@ Invalid `prisma.user.findUnique()` invocation:
 
 
 Database `posapp` does not exist on the database server at `localhost:3306`.
+ [LOGGER] 2025-10-21 09:15:53.908 AM error : controllers/cart.controller.js:updateCart - 
+Invalid `prisma.carts.update()` invocation:
+
+{
+  where: {
+    id: 6
+  },
+  data: {
+    productName: undefined,
+    qty: 2,
+    totalPrice: 0,
+    note: undefined,
+    productId: NaN,
+    userId: undefined,
++   price: Decimal
+  }
+}
+
+Argument `price` is missing.

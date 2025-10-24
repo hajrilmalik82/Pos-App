@@ -4,7 +4,6 @@ import { logger } from "../utils/winston.js";
 import prism from "@prisma/client";
 import fs from "fs";
 import pdf from "pdf-creator-node";
-import excelJS from "exceljs";
 
 export const insertOrder = async (req, res) => {
   try {
@@ -102,31 +101,31 @@ export const getAllOrder = async (req, res) => {
     if (last_id < 1) {
       result = await prisma.$queryRaw(
         prism.sql`SELECT id, code, date, total, ppn, grandTotal
-          FROM orders
-          WHERE (
-            code LIKE CONCAT('%', ${search}, '%')
-            OR date LIKE CONCAT('%', ${search}, '%')
-            OR total LIKE CONCAT('%', ${search}, '%')
-            OR ppn LIKE CONCAT('%', ${search}, '%')
-            OR grandTotal LIKE CONCAT('%', ${search}, '%')
-          )
-          ORDER BY id DESC 
-          LIMIT ${limit};`
+         FROM orders
+         WHERE (
+           code LIKE CONCAT('%', ${search}, '%')
+           OR date LIKE CONCAT('%', ${search}, '%')
+           OR total LIKE CONCAT('%', ${search}, '%')
+           OR ppn LIKE CONCAT('%', ${search}, '%')
+           OR grandTotal LIKE CONCAT('%', ${search}, '%')
+         )
+         ORDER BY id DESC 
+         LIMIT ${limit};`
       );
     } else {
       result = await prisma.$queryRaw(
         prism.sql`SELECT id, code, date, total, ppn, grandTotal
-          FROM Orders 
-          WHERE (
-            code LIKE CONCAT('%', ${search}, '%')
-            OR date LIKE CONCAT('%', ${search}, '%')
-            OR total LIKE CONCAT('%', ${search}, '%')
-            OR ppn LIKE CONCAT('%', ${search}, '%')
-            OR grandTotal LIKE CONCAT('%', ${search}, '%')
-          )
-        AND id < ${last_id}
-        ORDER BY id DESC 
-        LIMIT ${limit};`
+         FROM Orders 
+         WHERE (
+           code LIKE CONCAT('%', ${search}, '%')
+           OR date LIKE CONCAT('%', ${search}, '%')
+           OR total LIKE CONCAT('%', ${search}, '%')
+           OR ppn LIKE CONCAT('%', ${search}, '%')
+           OR grandTotal LIKE CONCAT('%', ${search}, '%')
+         )
+       AND id < ${last_id}
+       ORDER BY id DESC 
+       LIMIT ${limit};`
       );
     }
     return res.status(200).json({
@@ -155,7 +154,6 @@ export const generatePdf = async (req, res) => {
     border: "10mm",
     header: {
       height: "0.1mm",
-      // contents: '<div style="text-align: center;">Author: Pojok Code</div>',
       contents: "",
     },
     footer: {
@@ -170,9 +168,15 @@ export const generatePdf = async (req, res) => {
     if (fs.existsSync(fullPath)) {
       fs.unlinkSync(fullPath);
     }
+
+    // === PERBAIKAN 1: Mengatur rentang tanggal dengan benar ===
     const startDate = new Date(req.body.startDate);
+    startDate.setHours(0, 0, 0, 0); // Set ke awal hari
+
     const endDate = new Date(req.body.endDate);
-    if (isNaN(startDate) && isNaN(endDate)) {
+    endDate.setHours(23, 59, 59, 999); // Set ke akhir hari
+
+    if (isNaN(startDate) || isNaN(endDate)) { // Perbaikan check
       return res.status(400).json({
         message: "Invalid date format",
         result: null,
@@ -181,8 +185,8 @@ export const generatePdf = async (req, res) => {
     const data = await prisma.orders.findMany({
       where: {
         date: {
-          gte: startDate,
-          lte: endDate,
+          gte: startDate.toISOString(), // Gunakan tanggal yang sudah diatur
+          lte: endDate.toISOString(),   // Gunakan tanggal yang sudah diatur
         },
       },
       include: {
@@ -194,6 +198,8 @@ export const generatePdf = async (req, res) => {
         Orderdetail: true,
       },
     });
+    // === AKHIR PERBAIKAN 1 ===
+
     let orders = [];
     data.forEach((order, no) => {
       orders.push({
@@ -223,8 +229,9 @@ export const generatePdf = async (req, res) => {
       });
     }
   } catch (error) {
+    // Perbaikan: Ganti logger error ke file yang benar
     logger.error(
-      "controllers/product.controller.js:generatePdf - " + error.message
+      "controllers/order.controller.js:generatePdf - " + error.message
     );
     return res.status(500).json({
       message: error.message,
@@ -233,105 +240,33 @@ export const generatePdf = async (req, res) => {
   }
 };
 
-export const generateExcel = async (req, res) => {
-  const workbook = new excelJS.Workbook();
-  const worksheet = workbook.addWorksheet("order");
-  const path = "./public/excel";
-  try {
-    if (fs.existsSync(`${path}/order.xlsx`)) {
-      fs.unlinkSync(`${path}/order.xlsx`);
-    }
-    const startDate = new Date(req.body.startDate);
-    const endDate = new Date(req.body.endDate);
-    if (isNaN(startDate) && isNaN(endDate)) {
-      return res.status(400).json({
-        message: "Invalid date format",
-        result: null,
-      });
-    }
-    const data = await prisma.$queryRaw`
-      SELECT  o.code, o.date, o.total,o.ppn,o.grandTotal,d.productName,d.price,
-      d.qty, d.totalPrice from Orders o 
-      INNER JOIN Orderdetail d ON(d.orderId=o.id)
-      WHERE o.date BETWEEN ${startDate} AND ${endDate}`;
-    worksheet.columns = [
-      { header: "No", key: "s_no", width: 5 },
-      { header: "Date", key: "date", width: 15 },
-      { header: "Code", key: "code", width: 20 },
-      { header: "Total", key: "total", width: 25 },
-      { header: "PPN", key: "ppn", width: 20 },
-      { header: "Grand Total", key: "grandTotal", width: 20 },
-      { header: "Product Name", key: "productName", width: 50 },
-      { header: "Price", key: "price", width: 25 },
-      { header: "QTY", key: "qty", width: 20 },
-      { header: "Total Price", key: "totalPrice", width: 30 },
-    ];
-    let counter = 1;
-    data.map((order) => {
-      order.s_no = counter;
-      order.total = Number(order.total).toLocaleString("id-ID");
-      order.ppn = Number(order.ppn).toLocaleString("id-ID");
-      order.grandTotal = Number(order.grandTotal).toLocaleString("id-ID");
-      order.price = Number(order.price).toLocaleString("id-ID");
-      order.qty = Number(order.qty).toLocaleString("id-ID");
-      order.totalPrice = Number(order.totalPrice).toLocaleString("id-ID");
-      worksheet.addRow(order);
-      counter++;
-    });
-    let list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    for (let i = 0; i <= counter; i++) {
-      list.forEach((item) => {
-        worksheet.getCell(item + i).border = {
-          top: { style: "thin" },
-          left: { style: "thin" },
-          bottom: { style: "thin" },
-          right: { style: "thin" },
-        };
-      });
-    }
-    worksheet.getRow(1).eachCell((cell) => {
-      cell.font = { bold: true };
-    });
-    await workbook.xlsx.writeFile(`${path}/order.xlsx`);
-    return res.status(200).json({
-      message: "success",
-      result: `/excel/order.xlsx`,
-    });
-  } catch (error) {
-    logger.error(
-      "controllers/product.controller.js:generateExcel - " + error.message
-    );
-    return res.status(500).json({
-      message: error.message,
-      result: null,
-    });
-  }
-};
 
 export const orderYearly = async (req, res) => {
   const year = parseInt(req.query.year) || new Date().getFullYear();
   try {
     const result = await prisma.$queryRaw`
-      SELECT 
-        IFNULL(SUM(CASE WHEN MONTH(date) = 1 THEN grandTotal ELSE 0 END), 0) AS order_01,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 2 THEN grandTotal ELSE 0 END), 0) AS order_02,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 3 THEN grandTotal ELSE 0 END), 0) AS order_03,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 4 THEN grandTotal ELSE 0 END), 0) AS order_04,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 5 THEN grandTotal ELSE 0 END), 0) AS order_05,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 6 THEN grandTotal ELSE 0 END), 0) AS order_06,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 7 THEN grandTotal ELSE 0 END), 0) AS order_07,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 8 THEN grandTotal ELSE 0 END), 0) AS order_08,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 9 THEN grandTotal ELSE 0 END), 0) AS order_09,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 10 THEN grandTotal ELSE 0 END), 0) AS order_10,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 11 THEN grandTotal ELSE 0 END), 0) AS order_11,
-        IFNULL(SUM(CASE WHEN MONTH(date) = 12 THEN grandTotal ELSE 0 END), 0) AS order_12
-      FROM orders
-      WHERE YEAR(date) = ${year}
-    `;
+     SELECT 
+       IFNULL(SUM(CASE WHEN MONTH(date) = 1 THEN grandTotal ELSE 0 END), 0) AS order_01,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 2 THEN grandTotal ELSE 0 END), 0) AS order_02,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 3 THEN grandTotal ELSE 0 END), 0) AS order_03,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 4 THEN grandTotal ELSE 0 END), 0) AS order_04,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 5 THEN grandTotal ELSE 0 END), 0) AS order_05,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 6 THEN grandTotal ELSE 0 END), 0) AS order_06,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 7 THEN grandTotal ELSE 0 END), 0) AS order_07,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 8 THEN grandTotal ELSE 0 END), 0) AS order_08,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 9 THEN grandTotal ELSE 0 END), 0) AS order_09,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 10 THEN grandTotal ELSE 0 END), 0) AS order_10,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 11 THEN grandTotal ELSE 0 END), 0) AS order_11,
+       IFNULL(SUM(CASE WHEN MONTH(date) = 12 THEN grandTotal ELSE 0 END), 0) AS order_12
+     FROM orders
+     WHERE YEAR(date) = ${year}
+   `;
+
+    // === PERBAIKAN 3: Konversi objek hasil query ke array ===
     let arry = [];
-    result.map((item) => {
-      arry.push(
-        ...arry,
+    if (result.length > 0) {
+      const item = result[0]; // Hasil query SQL ini hanya 1 baris (objek)
+      arry = [
         Number(item.order_01),
         Number(item.order_02),
         Number(item.order_03),
@@ -343,9 +278,11 @@ export const orderYearly = async (req, res) => {
         Number(item.order_09),
         Number(item.order_10),
         Number(item.order_11),
-        Number(item.order_12)
-      );
-    });
+        Number(item.order_12),
+      ];
+    }
+    // === AKHIR PERBAIKAN 3 ===
+
     return res.status(200).json({
       message: "success",
       result: arry,

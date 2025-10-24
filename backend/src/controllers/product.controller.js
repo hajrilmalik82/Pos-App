@@ -3,15 +3,12 @@ import { productValidation } from "../validations/product.validation.js";
 import { setCode } from "../utils/documentPatern.js";
 import { logger } from "../utils/winston.js";
 import prisma from "../utils/client.js";
-import path from "path";
-import fs from "fs";
 import pdf from "pdf-creator-node";
 import excelJS from "exceljs";
+import path from "path";
+import fs from "fs";
 
 export const createProduct = async (req, res) => {
-  const fileMaxSize = process.env.FILE_MAX_SIZE;
-  const allowFileExt = process.env.FILE_EXTENSION;
-  const msgFileSize = process.env.FILE_MAX_MESSAGE;
   const { error, value } = productValidation(req.body);
   if (error != null) {
     return res.status(400).json({
@@ -19,55 +16,22 @@ export const createProduct = async (req, res) => {
       result: null,
     });
   }
-  if (req.files === null || req.files.file === undefined)
-    return res.status(400).json({
-      message: "Image cannot be empty",
-      result: null,
-    });
-  // jika semuanya lolos
-  const file = req.files.file;
-  const fileSize = file.data.length;
-  const ext = path.extname(file.name);
-  const fileName = file.md5 + ext;
-  const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
-  const allowedType = allowFileExt;
-
-  if (!allowedType.includes(ext.toLowerCase()))
-    return res.status(422).json({
-      message: "invalid file type",
-      result: null,
-    });
-
-  if (fileSize > fileMaxSize)
-    return res.status(422).json({
-      message: msgFileSize,
-      result: null,
-    });
 
   try {
-    file.mv(`./public/images/${fileName}`, async (err) => {
-      if (err)
-        return res.status(500).json({
-          message: err.message,
-          result: null,
-        });
-      const result = await prisma.product.create({
-        data: {
-          code: setCode("PRD-"),
-          barcode: value.barcode ? value.barcode : null,
-          productName: value.productName,
-          image: fileName,
-          url: url,
-          qty: value.qty,
-          price: value.price,
-          kategoryId: value.kategoryId,
-          // supplierId: value.supplierId, <-- DIHAPUS
-        },
-      });
-      return res.status(200).json({
-        message: "success",
-        result,
-      });
+    // Logika file.mv() dihapus, langsung create ke database
+    const result = await prisma.product.create({
+      data: {
+        code: setCode("PRD-"),
+        barcode: value.barcode ? value.barcode : null,
+        productName: value.productName,
+        qty: value.qty,
+        price: value.price,
+        kategoryId: value.kategoryId,
+      },
+    });
+    return res.status(200).json({
+      message: "success",
+      result,
     });
   } catch (error) {
     logger.error(
@@ -93,12 +57,9 @@ export const getAllProduct = async (req, res) => {
                 code, 
                 barcode, 
                 productName, 
-                image, 
-                url,
                 qty, 
                 price, 
                 kategoryId, 
-                -- supplierId, <-- DIHAPUS
                 createdAt, 
                 updatedAt 
             FROM 
@@ -123,12 +84,9 @@ export const getAllProduct = async (req, res) => {
                 code, 
                 barcode, 
                 productName, 
-                image, 
-                url,
                 qty, 
                 price, 
                 kategoryId, 
-                -- supplierId, <-- DIHAPUS
                 createdAt, 
                 updatedAt 
             FROM 
@@ -172,7 +130,6 @@ export const getProductById = async (req, res) => {
     const result = await prisma.product.findUnique({
       include: {
         kategory: true,
-        // supplier: true, <-- DIHAPUS
       },
       where: {
         id: Number(req.params.id),
@@ -218,7 +175,6 @@ export const getProductByCategory = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  // cek id ada atau tidak
   const { id } = req.params;
   const product = await prisma.product.findUnique({
     where: {
@@ -238,47 +194,10 @@ export const updateProduct = async (req, res) => {
       result: null,
     });
   }
-  // jika lolos semua
-  let fileName = "";
-  let url = "";
-  if (
-    !req.files ||
-    req.files === null ||
-    req.files.file === undefined ||
-    !req.files.file
-  ) {
-    fileName = product.image;
-    url = product.url;
-  } else {
-    const fileMaxSize = process.env.FILE_MAX_SIZE;
-    const allowFileExt = process.env.FILE_EXTENSION;
-    const msgFileSize = process.env.FILE_MAX_MESSAGE;
-    const file = req.files.file;
-    const fileSize = file.data.length;
-    const ext = path.extname(file.name);
-    fileName = file.md5 + ext;
-    url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
-    const allowedType = allowFileExt;
+  
+  // SEMUA LOGIKA VALIDASI, UPLOAD, DAN HAPUS FILE LAMA DIHAPUS DARI SINI
+  // (fs.unlinkSync, file.mv, dll)
 
-    if (!allowedType.includes(ext.toLowerCase()))
-      return res
-        .status(422)
-        .json({ message: "Invalid image type", result: null });
-    if (fileSize > fileMaxSize)
-      return res.status(422).json({
-        message: msgFileSize,
-        result: null,
-      });
-
-    file.mv(`./public/images/${fileName}`, async (err) => {
-      if (err)
-        return res.status(500).json({ message: err.message, result: null });
-    });
-
-    // delete old image
-    const filePath = `./public/images/${product.image}`;
-    fs.unlinkSync(filePath);
-  }
   try {
     const result = await prisma.product.update({
       where: {
@@ -288,12 +207,10 @@ export const updateProduct = async (req, res) => {
         code: product.code,
         barcode: value.barcode ? value.barcode : null,
         productName: value.productName,
-        image: fileName,
-        url: url,
+        // 'image' dan 'url' dihapus
         qty: value.qty,
         price: value.price,
         kategoryId: value.kategoryId,
-        // supplierId: value.supplierId, <-- DIHAPUS
       },
     });
     return res.status(200).json({
@@ -312,6 +229,7 @@ export const updateProduct = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
+  // ... (Tidak ada perubahan di deleteProduct, biarkan apa adanya)
   try {
     const product = await prisma.product.findUnique({
       where: {
@@ -347,6 +265,8 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+// ... (Biarkan fungsi generatePdf dan generateExcel apa adanya)
+// ... (Salin sisa fungsi generatePdf dan generateExcel dari file asli Anda)
 export const generatePdf = async (req, res) => {
   let pathFile = "./public/pdf";
   let fileName = "product.pdf";

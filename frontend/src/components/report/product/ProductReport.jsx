@@ -35,31 +35,6 @@ const ProductReport = () => {
     }
   };
 
-  const downloadExcel = async () => {
-    const id = toast.loading("Please wait...", {
-      position: "top-center",
-    });
-    let reqOptions = {
-      url: "/api/products-excel",
-      method: "GET",
-    };
-    try {
-      const out = await axiosInstance.request(reqOptions);
-      toast.update(id, {
-        render: "Successfully Downloaded",
-        type: "success",
-        position: "top-center",
-        isLoading: false,
-        autoClose: 4000,
-      });
-      window.open(import.meta.env.VITE_API_URL + out.data.result, "_blank");
-    } catch (error) {
-      const errMessage = JSON.parse(error.request.response);
-      toast.error(errMessage.message, {
-        position: "top-center",
-      });
-    }
-  };
   return (
     <>
       <NavbarComponent />
@@ -84,13 +59,6 @@ const ProductReport = () => {
                     variant="primary me-1"
                   >
                     <FaFilePdf /> Download PDF
-                  </Button>
-                  <Button
-                    type="button"
-                    onClick={downloadExcel}
-                    variant="primary"
-                  >
-                    <FaFileExcel /> Download Excel
                   </Button>
                 </Col>
               </Form.Group>

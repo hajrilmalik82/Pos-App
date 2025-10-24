@@ -8,7 +8,6 @@ const ProductCard = ({ product, confirmDel }) => {
   return (
     <Col md={3} xs={6} className="mb-4">
       <Card className="shadow-sm border-0">
-        <Card.Img width={"100%"} height={200} variant="top" src={product.url} />
         <Card.Body>
           <Card.Text>
             <small>{product.code}</small>

@@ -1,5 +1,4 @@
-import { compare } from "bcrypt";
-import { encript } from "../utils/bcript.js";
+import { encript, compare } from "../utils/bcript.js";
 import prisma from "../utils/client.js";
 import { logger } from "../utils/winston.js";
 import {

@@ -24,7 +24,13 @@ const NavbarComponent = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary print">
       <Container fluid>
-        <Navbar.Brand href="/">POS APP</Navbar.Brand>
+        <Navbar.Brand href="/">
+        <Image
+    src="/img/Logo.jpg" // <-- Ganti dengan nama file logo Anda
+    alt="POS App Logo"
+    style={{ height: "38px", marginRight: "10px" }} // Atur tinggi & beri jarak
+  />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

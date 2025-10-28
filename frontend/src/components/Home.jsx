@@ -1,5 +1,4 @@
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
-import NavbarComponent from "./NavbarComponent.jsx";
 import ChartComponent from "./dashboard/ChartComponent.jsx";
 import { useState } from "react";
 
@@ -8,7 +7,6 @@ const Home = () => {
   const [totOrder, setTotOrder] = useState(0);
   return (
     <>
-      <NavbarComponent />
       <Container>
         <Row className="mt-3 bg-body-tertiary rounded p-3 pb-0">
           <Col>

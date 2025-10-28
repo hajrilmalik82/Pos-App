@@ -4,7 +4,6 @@ import { axiosInstance } from "../../auth/AxiosConfig.jsx";
 import { confirmAlert } from "react-confirm-alert";
 import { FaCheck, FaSearch } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import NavbarComponent from "../NavbarComponent.jsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Breadcrumb,
@@ -116,7 +115,6 @@ const ListProduct = () => {
   };
   return (
     <>
-      <NavbarComponent />
       <InfiniteScroll
         dataLength={data.length}
         next={fetchMore}

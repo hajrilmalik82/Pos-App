@@ -84,6 +84,9 @@ model User {
   password    String
   name        String
   role        String
+  canAccessMaster   Boolean @default(false)
+  canAccessTransaksi Boolean @default(false)
+  canAccessReport   Boolean @default(false)
   Carts       Carts[]
   Orders      Orders[]
   Orderreturn Orderreturn[]

@@ -5,7 +5,6 @@ import { confirmAlert } from "react-confirm-alert";
 import { MdEdit, MdCancel } from "react-icons/md";
 import { FaTrash, FaCheck } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
-import NavbarComponent from "../NavbarComponent.jsx";
 import {
   Breadcrumb,
   Button,
@@ -88,7 +87,6 @@ const ListCategory = () => {
   };
   return (
     <>
-      <NavbarComponent />
       <Container>
         <Row className="mt-3 bg-body-tertiary rounded p-3 pb-0">
           <Col>

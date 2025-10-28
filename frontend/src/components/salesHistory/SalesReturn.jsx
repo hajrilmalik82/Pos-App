@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../../auth/AxiosConfig.jsx";
 import secureLocalStorage from "react-secure-storage";
-import NavbarComponent from "../NavbarComponent.jsx";
 import {
   Breadcrumb,
   Button,
@@ -124,7 +123,6 @@ const SalesReturn = () => {
   };
   return (
     <>
-      <NavbarComponent />
       <Container>
         <Row className="mt-3 bg-body-tertiary rounded p-3 pb-0">
           <Col>

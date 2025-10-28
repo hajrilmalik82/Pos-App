@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { axiosInstance } from "../../../auth/AxiosConfig.jsx";
-import NavbarComponent from "../../NavbarComponent.jsx";
 import { Breadcrumb, Button, Col, Container, Form, Row } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import { FaFileExcel, FaFilePdf } from "react-icons/fa";
@@ -79,7 +78,6 @@ const SalesReport = () => {
   };
   return (
     <>
-      <NavbarComponent />
       <Container>
         <Row className="mt-3 bg-body-tertiary rounded p-3 pb-0">
           <Col>

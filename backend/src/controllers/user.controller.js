@@ -20,6 +20,11 @@ export const createUser = async (req, res) => {
       result: null,
     });
   }
+  if (value.role === "admin") {
+    value.canAccessMaster = true;
+    value.canAccessTransaksi = true;
+    value.canAccessReport = true;
+  }
   try {
     const result = await prisma.user.create({
       data: {
@@ -27,6 +32,9 @@ export const createUser = async (req, res) => {
         userName: value.userName,
         password: encript(value.password),
         role: value.role,
+        canAccessMaster: value.canAccessMaster,
+        canAccessTransaksi: value.canAccessTransaksi,
+        canAccessReport: value.canAccessReport,
       },
     });
     result.password = "xxxxxxxxxxxxxxxxxx";
@@ -77,6 +85,10 @@ export const updateUser = async (req, res) => {
         userName: value.userName,
         password: pass,
         role: value.role,
+
+        canAccessMaster: value.canAccessMaster,
+        canAccessTransaksi: value.canAccessTransaksi,
+        canAccessReport: value.canAccessReport,
       },
     });
     result.password = "xxxxxxxxxxxxxxxxxx";

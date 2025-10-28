@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { axiosInstance } from "../../auth/AxiosConfig.jsx";
 import { toast } from "react-toastify";
-import NavbarComponent from "../NavbarComponent.jsx";
 import {
   Breadcrumb,
   Button,
@@ -74,7 +73,6 @@ const ListPurchase = () => {
 
   return (
     <>
-      <NavbarComponent />
       <Container>
         <Row className="mt-3 bg-body-tertiary rounded p-3 pb-0">
           <Col>

@@ -4,10 +4,11 @@ import secureLocalStorage from "react-secure-storage";
 import { FaBuffer, FaChartBar } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import ProfileModal from "./ProfileModal.jsx";
-
+import { useAuth } from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 const NavbarComponent = () => {
   const [modalShow, setModalShow] = useState(false);
-  const user = secureLocalStorage.getItem("user");
+  const { user } = useAuth();
   let nama = "User";
   if (user) {
     nama = user.name;
@@ -34,47 +35,42 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown
-              title={
-                <>
-                  <FaBuffer /> {"Master"}
-                </>
-              }
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item href="/category">Category</NavDropdown.Item>
-              <NavDropdown.Item href="/product">Product</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown
-              title={
-                <>
-                  <GrTransaction /> {"Transaction"}
-                </>
-              }
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item href="/sales">Sales</NavDropdown.Item>
-              <NavDropdown.Item href="/sales-history">
-                Sales History
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/purchase">Purchase</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown
-              title={
-                <>
-                  <FaChartBar /> {"Report"}
-                </>
-              }
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item href="/product-report">
-                Product
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/sales-report">Sales</NavDropdown.Item>
-              <NavDropdown.Item href="/purchase-report">
-                Purchase
-              </NavDropdown.Item>
-            </NavDropdown>
+            {(user?.role === "admin" || user?.canAccessMaster) && (
+                <NavDropdown title="Master" id="basic-nav-dropdown">
+                  <NavDropdown.Item as={Link} to="/category">
+                    Kategori
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/product">
+                    Produk
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
+            {(user?.role === "admin" || user?.canAccessTransaksi) && (
+                <NavDropdown title="Transaksi" id="basic-nav-dropdown-transaksi">
+                  <NavDropdown.Item as={Link} to="/sales">
+                    Penjualan
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/sales-history">
+                    Riwayat Penjualan
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/purchase">
+                    Pembelian
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
+              {(user?.role === "admin" || user?.canAccessReport) && (
+                <NavDropdown title="Laporan" id="basic-nav-dropdown-laporan">
+                  <NavDropdown.Item as={Link} to="/sales-report">
+                    Laporan Penjualan
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/purchase-report">
+                    Laporan Pembelian
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/product-report">
+                    Laporan Produk
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
           </Nav>
           <Nav>
             <NavDropdown
@@ -85,6 +81,11 @@ const NavbarComponent = () => {
               }
               id="collapsible-nav-dropdown"
             >
+              {user?.role === "admin" && (
+                <Nav.Link as={Link} to="/users">
+                  Manajemen User
+                </Nav.Link>
+              )}
               <NavDropdown.Item href="#" onClick={() => setModalShow(true)}>
                 Profil
               </NavDropdown.Item>

@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { axiosInstance } from "../auth/AxiosConfig.jsx";
 // Import styled-components dan keyframes untuk animasi
 import styled, { keyframes } from "styled-components";
-
 // --- Styled Components ---
 
 // Animasi fade-in
@@ -111,7 +110,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   // Fungsi handleSubmit tetap sama persis
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/api/users/login", {
@@ -125,11 +124,23 @@ const Login = () => {
         toast.success(response.data.message, {
           position: "top-center",
         });
-        window.location.href = "/";
+        
+        // 3. GUNAKAN 'window.location.href' UNTUK MENCEGAH LOGIN LOOP
+        window.location.href = "/"; // <-- Ini adalah kode yang benar
       }
     } catch (error) {
-      const errMessage = JSON.parse(error.request.response);
-      toast.error(errMessage.message, {
+      // Ini adalah blok 'catch' yang sudah kita perbaiki
+      let message = "Terjadi kesalahan. Coba lagi nanti."; 
+      if (error.response) {
+        message = error.response.data.message || message;
+      } 
+      else if (error.request) {
+        message = "Tidak dapat terhubung ke server. Cek koneksi Anda.";
+      } 
+      else {
+        message = error.message;
+      }
+      toast.error(message, {
         position: "top-center",
       });
     }
